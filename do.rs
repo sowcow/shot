@@ -1,9 +1,9 @@
 
 fn main() {
-  android::raw_to_ppm("given", "result")
+  files::raw_to_ppm("given", "result")
 }
 
-mod android {
+mod files {
   use input;
   use data;
   use result;
