@@ -1,6 +1,8 @@
 
 fn main() {
-  files::raw_to_ppm("given", "result")
+  files::get_raw_screen("raw_screen");
+  files::raw_to_ppm("raw_screen", "screen.ppm");
+  files::ppm_to_bmp("screen.ppm", "screen.bmp");
 }
 
 mod files {
