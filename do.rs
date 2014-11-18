@@ -9,23 +9,34 @@ fn main() {
   result::write(result, output_file);
 }
 
+struct Data {
+  width: u8,
+  height: u8,
+  data: Vec<u8>,
+}
+
 
 mod input {
-  //use std::io::File;
+  use std::io::File;
 
-  pub fn read(_file: &str) -> Vec<u8> {
-    vec![1u8,2,3]
+  pub fn read(file_name: &str) -> Vec<u8> {
+    let path = Path::new(file_name);
+    let mut file = File::open(&path).unwrap();
+    file.read_to_end().unwrap()
   }
+
 }
 
 mod data {
 
   pub fn process(data: Vec<u8>) -> Vec<u8> {
-    let record_size = 4; // 4-th byte is kinda not used
+    let mut result = vec!();
 
-    for _rgb in data.as_slice().chunks(record_size) {
+    // each 4-th byte is just 255 for some reason
+    for rgb in data.as_slice().chunks(4) {
+      result.push_all([rgb[0], rgb[1], rgb[2]]);
     }
-    data
+    result
   }
 }
 
