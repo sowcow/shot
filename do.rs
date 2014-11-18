@@ -11,18 +11,20 @@ fn main() {
 
 
 mod input {
-  use std::io::File;
+  //use std::io::File;
 
-  pub fn read(file: &str) -> Vec<u8> {
+  pub fn read(_file: &str) -> Vec<u8> {
     vec![1u8,2,3]
   }
 }
 
 mod data {
-  //static RGB_RECORD_SIZE: uint = 4;
-  // 4-th is always = 255
 
   pub fn process(data: Vec<u8>) -> Vec<u8> {
+    let record_size = 4; // 4-th byte is kinda not used
+
+    for _rgb in data.as_slice().chunks(record_size) {
+    }
     data
   }
 }
@@ -32,6 +34,7 @@ mod result {
 
   pub fn write(data: Vec<u8>, file_name: &str) {
     let path = Path::new(file_name);
-    let mut file = try!( File::create(&path) );
+    let mut file = File::create(&path).unwrap();
+    file.write(data.as_slice()).unwrap();
   }
 }
