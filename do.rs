@@ -1,15 +1,19 @@
 
-// todo into one call
 fn main() {
-
-  let input_file = "given";
-  let output_file = "result";
-
-  let data = input::read(input_file);
-  let result = data::process(data);
-  result::write(result, output_file);
+  android::raw_to_ppm("given", "result")
 }
 
+mod android {
+  use input;
+  use data;
+  use result;
+
+  pub fn raw_to_ppm(input_file: &str, output_file: &str) {
+    let data = input::read(input_file);
+    let result = data::process(data);
+    result::write(result, output_file);
+  }
+}
 
 mod types {
   pub struct ImageData {
