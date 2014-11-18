@@ -9,14 +9,26 @@ mod input {
   }
 }
 
+mod data {
+  pub fn process(data: Vec<u8>) -> Vec<u8> {
+    data
+  }
+}
+
+mod result {
+  pub fn write(data: Vec<u8>, file: &str) {
+  }
+}
+
 
 fn main() {
-  //use input;
 
   let input_file = "given";
   let output_file = "result";
 
   let data = input::read(input_file);
+  let result = data::process(data);
+  result::write(result, output_file);
 }
 
   // preparing file apth
@@ -35,8 +47,6 @@ fn main() {
   //file.write(b"hello, file!\n");
 
 
-  //let result = process(data);
-  //write_result(result, output_file);
 
   
   //let input = open_input(INPUT_FILE);
