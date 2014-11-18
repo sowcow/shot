@@ -1,6 +1,7 @@
 
 fn main() {
   // shot task...
+  // funny that name of modules represent dependencies
   files::get_raw_screen("raw_screen");
   files::raw_to_ppm("raw_screen", "screen.ppm");
   files::ppm_to_bmp("screen.ppm", "screen.bmp");
@@ -20,8 +21,14 @@ mod files {
 
   pub fn get_raw_screen(file_name: &str) {
     use std::io::Command;
-    let output = Command::new("adb").arg("pull").arg("/dev/graphics/fb0").arg(file_name).output().unwrap();
-    if !output.status.success() { fail!("get_raw fail"); }
+    //let output = Command::new("adb").arg("pull").arg("/dev/graphics/fb0").arg(file_name).output().unwrap();
+
+    // not using specific file names and dont cleaning up
+    let output = Command::new("adb").arg("shell").arg("screencap").arg("/sdcard/raw").output().unwrap();
+    if !output.status.success() { fail!("get_raw fail1"); }
+
+    let output = Command::new("adb").arg("pull").arg("/sdcard/raw").arg(file_name).output().unwrap();
+    if !output.status.success() { fail!("get_raw fail1"); }
   }
 
   pub fn ppm_to_bmp(ppm: &str, bmp: &str) {
