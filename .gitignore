@@ -1,4 +1,5 @@
 /_
 /do
-/given
-/result
+/raw_screen
+/screen.ppm
+/screen.bmp

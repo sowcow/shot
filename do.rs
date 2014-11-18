@@ -1,19 +1,33 @@
 
 fn main() {
+  // shot task...
   files::get_raw_screen("raw_screen");
   files::raw_to_ppm("raw_screen", "screen.ppm");
   files::ppm_to_bmp("screen.ppm", "screen.bmp");
 }
 
 mod files {
-  use input;
-  use data;
-  use result;
 
   pub fn raw_to_ppm(input_file: &str, output_file: &str) {
+    use input;
+    use data;
+    use result;
+
     let data = input::read(input_file);
     let result = data::process(data);
     result::write(result, output_file);
+  }
+
+  pub fn get_raw_screen(file_name: &str) {
+    use std::io::Command;
+    let output = Command::new("adb").arg("pull").arg("/dev/graphics/fb0").arg(file_name).output().unwrap();
+    if !output.status.success() { fail!("get_raw fail"); }
+  }
+
+  pub fn ppm_to_bmp(ppm: &str, bmp: &str) {
+    use std::io::Command;
+    let output = Command::new("convert").arg(ppm).arg(bmp).output().unwrap();
+    if !output.status.success() { fail!("ppm2bmp fail"); }
   }
 }
 
