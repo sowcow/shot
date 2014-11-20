@@ -1,12 +1,12 @@
 extern crate time; // deprecated one ...
 
 // ...
-fn diff() {
-  use time::get_time;
-
-  let now = get_time();
-  println!("{}", now);
-}
+//fn diff() {
+//  use time::get_time;
+//
+//  let now = get_time();
+//  println!("{}", now);
+//}
 
 fn main() {
   // shot task...
