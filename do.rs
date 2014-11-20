@@ -1,5 +1,6 @@
 extern crate time; // deprecated one ...
 
+// ...
 fn diff() {
   use time::get_time;
 
@@ -10,13 +11,13 @@ fn diff() {
 fn main() {
   // shot task...
   // funny that name of modules represent dependencies
-  diff();
+  //diff();
   files::get_raw_screen("raw_screen");
-  diff();
+  //diff();
   files::raw_to_ppm("raw_screen", "screen.ppm");
-  diff();
+  //diff();
   files::ppm_to_bmp("screen.ppm", "screen.bmp");
-  diff();
+  //diff();
 }
 
 mod files {
@@ -36,16 +37,16 @@ mod files {
     //let output = Command::new("adb").arg("pull").arg("/dev/graphics/fb0").arg(file_name).output().unwrap();
 
     // not using specific file names and dont cleaning up
-    let output = Command::new("adb").arg("shell").arg("screencap").arg("/sdcard/raw").output().unwrap();
+    let output = Command::new("adb").args(["shell","screencap","/sdcard/raw"]).output().unwrap();
     if !output.status.success() { fail!("get_raw fail1"); }
 
-    let output = Command::new("adb").arg("pull").arg("/sdcard/raw").arg(file_name).output().unwrap();
+    let output = Command::new("adb").args(["pull","/sdcard/raw",file_name]).output().unwrap();
     if !output.status.success() { fail!("get_raw fail1"); }
   }
 
   pub fn ppm_to_bmp(ppm: &str, bmp: &str) {
     use std::io::Command;
-    let output = Command::new("convert").arg(ppm).args(["-rotate", "-90"]).arg(bmp).output().unwrap();
+    let output = Command::new("convert").args([ppm,"-rotate", "-90",bmp]).output().unwrap();
     if !output.status.success() { fail!("ppm2bmp fail"); }
   }
 }
