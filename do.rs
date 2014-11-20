@@ -1,10 +1,22 @@
+extern crate time; // deprecated one ...
+
+fn diff() {
+  use time::get_time;
+
+  let now = get_time();
+  println!("{}", now);
+}
 
 fn main() {
   // shot task...
   // funny that name of modules represent dependencies
+  diff();
   files::get_raw_screen("raw_screen");
+  diff();
   files::raw_to_ppm("raw_screen", "screen.ppm");
+  diff();
   files::ppm_to_bmp("screen.ppm", "screen.bmp");
+  diff();
 }
 
 mod files {
@@ -33,7 +45,7 @@ mod files {
 
   pub fn ppm_to_bmp(ppm: &str, bmp: &str) {
     use std::io::Command;
-    let output = Command::new("convert").arg(ppm).arg(bmp).output().unwrap();
+    let output = Command::new("convert").arg(ppm).args(["-rotate", "-90"]).arg(bmp).output().unwrap();
     if !output.status.success() { fail!("ppm2bmp fail"); }
   }
 }
