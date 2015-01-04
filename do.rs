@@ -70,7 +70,7 @@ mod input {
 
     let width = file.read_le_i32().unwrap();
     let height = file.read_le_i32().unwrap();
-    let _unknown = file.read_le_i32().unwrap();
+    let _PixelFormat = file.read_le_i32().unwrap();
     let data = file.read_to_end().unwrap();
 
     ImageData { width: width, height: height, data: data }
@@ -87,9 +87,9 @@ mod data {
       data: vec!()
     };
 
-    // each 4-th byte is just `255` for some reason
-    for rgb in data.data.as_slice().chunks(4) {
-      result.data.push_all([rgb[0], rgb[1], rgb[2]]);
+    // each 4-th byte is omitted (alpha, always `255`)
+    for rgba in data.data.as_slice().chunks(4) {
+      result.data.push_all([rgba[0], rgba[1], rgba[2]]);
     }
     result
   }
